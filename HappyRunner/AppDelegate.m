@@ -22,7 +22,7 @@
     self.window.rootViewController = root;
     
     [self.window makeKeyAndVisible];
-     //test
+    //测试1
     
     return YES;
 }
