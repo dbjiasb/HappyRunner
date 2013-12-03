@@ -5,19 +5,31 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
+<<<<<<< HEAD
 	<string>247D6150-21B7-4D12-A106-6983542C7C1C</string>
+=======
+	<string>1DB8A87E-3E0E-48D9-A0F9-47EDB2AB9270</string>
+>>>>>>> e4eb4b32338cd501f90597253da34583e4e55567
 	<key>IDESourceControlProjectName</key>
 	<string>HappyRunner</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
+<<<<<<< HEAD
 		<key>3FC9CA27-4CF7-45FB-AEE1-BFCE0AFF5F4D</key>
+=======
+		<key>1710DCA6-CAB9-46F0-8A6C-663F376B3ECA</key>
+>>>>>>> e4eb4b32338cd501f90597253da34583e4e55567
 		<string>https://github.com/dbjiasb/HappyRunner.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>HappyRunner.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
+<<<<<<< HEAD
 		<key>3FC9CA27-4CF7-45FB-AEE1-BFCE0AFF5F4D</key>
+=======
+		<key>1710DCA6-CAB9-46F0-8A6C-663F376B3ECA</key>
+>>>>>>> e4eb4b32338cd501f90597253da34583e4e55567
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
@@ -25,14 +37,22 @@
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
+<<<<<<< HEAD
 	<string>3FC9CA27-4CF7-45FB-AEE1-BFCE0AFF5F4D</string>
+=======
+	<string>1710DCA6-CAB9-46F0-8A6C-663F376B3ECA</string>
+>>>>>>> e4eb4b32338cd501f90597253da34583e4e55567
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
+<<<<<<< HEAD
 			<string>3FC9CA27-4CF7-45FB-AEE1-BFCE0AFF5F4D</string>
+=======
+			<string>1710DCA6-CAB9-46F0-8A6C-663F376B3ECA</string>
+>>>>>>> e4eb4b32338cd501f90597253da34583e4e55567
 			<key>IDESourceControlWCCName</key>
 			<string>HappyRunner</string>
 		</dict>
