@@ -133,7 +133,8 @@
 {
     
     LoginResp *resp = (LoginResp *)result;
-    if (resp.code.integerValue == 1) {
+    if (resp.code.integerValue == 1)
+    {
         [MyDefaults setToken:resp.TOKEN];
         [self.navigationController popViewControllerAnimated:YES];
     }

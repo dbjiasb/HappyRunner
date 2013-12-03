@@ -13,3 +13,6 @@
 
 #import "LoginReq.h"
 #import "LoginResp.h"
+
+#import "KnowledgeReq.h"
+#import "KnowledgeResp.h"

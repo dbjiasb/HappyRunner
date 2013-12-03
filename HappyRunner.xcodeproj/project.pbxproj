@@ -86,6 +86,8 @@
 		9E8717E818224426003445BC /* btn_cell_setting.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E8717E718224426003445BC /* btn_cell_setting.png */; };
 		9E8717EA1822488C003445BC /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E8717E91822488C003445BC /* AVFoundation.framework */; };
 		9E8717EC182248DF003445BC /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E8717EB182248DF003445BC /* MediaPlayer.framework */; };
+		9E8BB2FE184A4CDE00EEDA4B /* KnowledgeReq.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E8BB2FD184A4CDE00EEDA4B /* KnowledgeReq.m */; };
+		9E8BB301184A4D7500EEDA4B /* KnowledgeResp.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E8BB300184A4D7500EEDA4B /* KnowledgeResp.m */; };
 		9EA500E01846EA4C00C44AF8 /* scene_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9EA500DF1846EA4C00C44AF8 /* scene_1.jpg */; };
 		9EA500E41846EAA200C44AF8 /* GameChooseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA500E31846EAA200C44AF8 /* GameChooseViewController.m */; };
 		9EA500E71846EC0100C44AF8 /* SCGIFImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA500E61846EC0100C44AF8 /* SCGIFImageView.m */; };
@@ -243,6 +245,10 @@
 		9E8717E718224426003445BC /* btn_cell_setting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_cell_setting.png; sourceTree = "<group>"; };
 		9E8717E91822488C003445BC /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		9E8717EB182248DF003445BC /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		9E8BB2FC184A4CDE00EEDA4B /* KnowledgeReq.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KnowledgeReq.h; sourceTree = "<group>"; };
+		9E8BB2FD184A4CDE00EEDA4B /* KnowledgeReq.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KnowledgeReq.m; sourceTree = "<group>"; };
+		9E8BB2FF184A4D7500EEDA4B /* KnowledgeResp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KnowledgeResp.h; sourceTree = "<group>"; };
+		9E8BB300184A4D7500EEDA4B /* KnowledgeResp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KnowledgeResp.m; sourceTree = "<group>"; };
 		9EA500DF1846EA4C00C44AF8 /* scene_1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = scene_1.jpg; sourceTree = "<group>"; };
 		9EA500E21846EAA200C44AF8 /* GameChooseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameChooseViewController.h; sourceTree = "<group>"; };
 		9EA500E31846EAA200C44AF8 /* GameChooseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameChooseViewController.m; sourceTree = "<group>"; };
@@ -522,6 +528,8 @@
 				9E1567A0182BF0D000D3486D /* LoginReq.m */,
 				9E1567C1182BF72900D3486D /* RegisterReq.h */,
 				9E1567C2182BF72900D3486D /* RegisterReq.m */,
+				9E8BB2FC184A4CDE00EEDA4B /* KnowledgeReq.h */,
+				9E8BB2FD184A4CDE00EEDA4B /* KnowledgeReq.m */,
 				9E1567A1182BF0D000D3486D /* RequestMsg.h */,
 				9E1567A2182BF0D000D3486D /* RequestMsg.m */,
 				9E1567A5182BF0D000D3486D /* Response */,
@@ -538,6 +546,8 @@
 				9E1567A7182BF0D000D3486D /* LoginResp.m */,
 				9E1567C4182BF7CB00D3486D /* RegisterResp.h */,
 				9E1567C5182BF7CB00D3486D /* RegisterResp.m */,
+				9E8BB2FF184A4D7500EEDA4B /* KnowledgeResp.h */,
+				9E8BB300184A4D7500EEDA4B /* KnowledgeResp.m */,
 				9E1567A8182BF0D000D3486D /* ResponseMsg.h */,
 				9E1567A9182BF0D000D3486D /* ResponseMsg.m */,
 				9E1567AA182BF0D000D3486D /* ResponseMsg4Upload.h */,
@@ -877,10 +887,12 @@
 				9E1567B8182BF17B00D3486D /* JSONKit.m in Sources */,
 				9E252BD2183D115F0083F0C6 /* SBJSON.m in Sources */,
 				9EA500E41846EAA200C44AF8 /* GameChooseViewController.m in Sources */,
+				9E8BB301184A4D7500EEDA4B /* KnowledgeResp.m in Sources */,
 				9E1567AE182BF0D000D3486D /* RequestMsg4Upload.m in Sources */,
 				9E252BD1183D115F0083F0C6 /* NSString+SBJSON.m in Sources */,
 				9E252BD3183D115F0083F0C6 /* SBJsonBase.m in Sources */,
 				9E0D97FB180AD53700F64490 /* FriendsViewController.m in Sources */,
+				9E8BB2FE184A4CDE00EEDA4B /* KnowledgeReq.m in Sources */,
 				9E1567AD182BF0D000D3486D /* RequestMsg.m in Sources */,
 				9E1567AC182BF0D000D3486D /* LoginReq.m in Sources */,
 				9E15679A182BF0B800D3486D /* DHServiceInvocation.m in Sources */,

@@ -10,6 +10,9 @@
 
 @interface MyDefaults : EAGLContext
 
++ (void)setUserID:(NSString *)userID;
++ (NSString *)getUserID;
+
 + (void)setToken:(NSString *)token;
 + (NSString *)getToken;
 
