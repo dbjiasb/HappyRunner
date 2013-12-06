@@ -6,6 +6,19 @@
 //  Copyright (c) 2013年 chinatsp. All rights reserved.
 //
 
+@interface GameImageView : UIImageView
+
+@property (nonatomic, assign) float scale;
+@property (nonatomic, assign) float translationX;
+@property (nonatomic, assign) float translationY;
+
+@end
+
+@implementation GameImageView
+
+
+@end
+
 #import "GameChooseViewController.h"
 #import "SCGIFImageView.h"
 
@@ -15,8 +28,8 @@
     
     NSTimer *timer;
     
-    UIImageView *treeRight;
-    UIImageView *treeLeft;
+    GameImageView *treeRight;
+    GameImageView *treeLeft;
     
     float leftY;
     float leftX;
@@ -26,6 +39,9 @@
     
     float scaleNum ;
 }
+
+@property (nonatomic, retain) NSMutableArray *leftItems;
+@property (nonatomic, retain) NSMutableArray *rightItems;
 
 @property (nonatomic,retain) StartRaceResp *startResp;
 
@@ -123,10 +139,24 @@
     [self loadTrees];
     [self loadRunner];
     
-    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTrees) userInfo:nil repeats:YES];
+    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateItems) userInfo:nil repeats:YES];
 }
 
-- (void)updateTrees
+- (void)updateItems
+{
+    for (int i = 0; i < self.leftItems.count; i++)
+    {
+        GameImageView *item = self.leftItems[i];
+        [self updateItem:item isLeft:YES];
+        
+        GameImageView *itemr = self.rightItems[i];
+        [self updateItem:itemr isLeft:NO];
+
+    }
+    
+}
+
+- (void)updateItem:(GameImageView *)item isLeft:(BOOL)isLeft
 {
     CABasicAnimation *scale = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
     scale.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
@@ -136,27 +166,13 @@
     scale.delegate = self;
     scale.fillMode = kCAFillModeForwards;
     scale.removedOnCompletion = NO;
-    scale.fromValue = [NSNumber numberWithFloat:scaleNum];
-    scale.toValue = [NSNumber numberWithFloat:scaleNum + 0.2];
-    scaleNum = scaleNum + 0.2;
-    if (scaleNum >= 1) {
-        scaleNum = .1;
+    scale.fromValue = [NSNumber numberWithFloat:item.scale];
+    scale.toValue = [NSNumber numberWithFloat:item.scale + 0.2];
+    item.scale = item.scale + 0.2;
+    if (item.scale >= 1) {
+        item.scale = .1;
     }
-    [treeRight.layer addAnimation:scale forKey:@"scale"];
-    [treeLeft.layer addAnimation:scale forKey:@"scale"];
-    
-    CABasicAnimation *translationX = [CABasicAnimation animationWithKeyPath:@"transform.translation.x"];
-    translationX.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
-    translationX.duration = 1;
-    translationX.repeatCount = 1;
-    translationX.autoreverses = NO;
-    translationX.fillMode = kCAFillModeForwards;
-    translationX.removedOnCompletion = NO;
-    translationX.fromValue = [NSNumber numberWithFloat:rightX];
-    translationX.toValue = [NSNumber numberWithFloat:rightX + 600.0 / 4];
-    rightX = rightX + 600.0 / 4;
-
-    [treeRight.layer addAnimation:translationX forKey:@"translation.x"];
+    [item.layer addAnimation:scale forKey:@"scale"];
     
     CABasicAnimation *translationY = [CABasicAnimation animationWithKeyPath:@"transform.translation.y"];
     translationY.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
@@ -165,59 +181,99 @@
     translationY.autoreverses = NO;
     translationY.fillMode = kCAFillModeForwards;
     translationY.removedOnCompletion = NO;
-
-    translationY.fromValue = [NSNumber numberWithFloat:rightY];
-    translationY.toValue = [NSNumber numberWithFloat:rightY + 260.0 / 4];
-    rightY = rightY + 260.0 / 4;
-
-    [treeRight.layer addAnimation:translationY forKey:@"translation.y"];
-    [treeLeft.layer addAnimation:translationY forKey:@"translation.y"];
     
-    CABasicAnimation *translationX1 = [CABasicAnimation animationWithKeyPath:@"transform.translation.x"];
-    translationX1.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
-    translationX1.duration = 1;
-    translationX1.repeatCount = 1;
-    translationX1.autoreverses = NO;
+    translationY.fromValue = [NSNumber numberWithFloat:item.translationY];
+    translationY.toValue = [NSNumber numberWithFloat:item.translationY + 65];
+    item.translationY = item.translationY + 65;
+    
+    [item.layer addAnimation:translationY forKey:@"translation.y"];
+    
+    CABasicAnimation *translationX = [CABasicAnimation animationWithKeyPath:@"transform.translation.x"];
+    translationX.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+    translationX.duration = 1;
+    translationX.repeatCount = 1;
+    translationX.autoreverses = NO;
     translationX.fillMode = kCAFillModeForwards;
     translationX.removedOnCompletion = NO;
-    translationX1.fromValue = [NSNumber numberWithFloat:leftX];
-    translationX1.toValue = [NSNumber numberWithFloat:leftX - 530.0 / 4];
-    leftX = leftX - 530.0 / 4;
-
-    [treeLeft.layer addAnimation:translationX1 forKey:@"translation.x"];
-
-    if (leftX < -530) {
-        leftX = 0;
-        leftY = 0;
-        rightX = 0;
-        rightY = 0;
+    translationX.fromValue = [NSNumber numberWithFloat:item.translationX];
+    if (isLeft)
+    {
+        translationX.toValue = [NSNumber numberWithFloat:item.translationX - 133];
+        item.translationX = item.translationX - 133;
     }
+    else
+    {
+        translationX.toValue = [NSNumber numberWithFloat:item.translationX + 150];
+        item.translationX = item.translationX + 150;
+    }
+    [item.layer addAnimation:translationX forKey:@"translation.x"];
+    
+
+    if (item.translationY > 260)
+    {
+        item.translationX = 0;
+        item.translationY = 0;
+//        item.scale = .1;
+        
+        [item.layer removeAnimationForKey:@"scale"];
+        [item.layer removeAnimationForKey:@"translation.x"];
+        [item.layer removeAnimationForKey:@"translation.y"];
+        item.layer.transform = CATransform3DIdentity;
+        
+        if (isLeft)
+        {
+            [item setFrame:CGRectMake(330 , 430 , 174 , 146)];
+        }
+        else
+        {
+            [item setFrame:CGRectMake(470 , 430 , 174 , 146)];
+        }
+        item.layer.transform = CATransform3DMakeScale(0.1 , 0.1 , 1);
+    }
+    
+    NSLog(@"%f---%f---%f",item.scale,item.translationX,item.translationY);
 }
 
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
 {
 //    [treeRight.layer animationForKey:@"transform.translation.y"];
-    NSLog(@"animationDidStop");
+//    NSLog(@"animationDidStop");
 }
 
 - (void)loadTrees
 {
     UIImage *img = [UIImage imageUtilName:@"tree_1"];
     
-    treeRight = [[UIImageView alloc] initWithFrame:CGRectMake(470, 430, 174, 146)];
-    treeRight.layer.anchorPoint = CGPointMake(0.5,1);
-    treeRight.layer.transform = CATransform3DMakeScale(0.1, 0.1, 1);
-    treeRight.image = img;
-    [self.view addSubview:treeRight];
+    if (!self.leftItems) {
+        self.leftItems = [NSMutableArray array];
+    }
+    if (!self.rightItems) {
+        self.rightItems = [NSMutableArray array];
+    }
     
-
-    
-    treeLeft = [[UIImageView alloc] initWithFrame:CGRectMake(330, 430, 174, 146)];
-    treeLeft.layer.anchorPoint = CGPointMake(0.5, 1);
-    treeLeft.layer.transform = CATransform3DMakeScale(0.1, 0.1, 1);
-    treeLeft.image = img;
-    [self.view addSubview:treeLeft];
-
+    for (int i = 0; i < 3; i++)
+    {
+        GameImageView *rt = [[GameImageView alloc] initWithFrame:CGRectMake(470 + i * 150, 430 + i * 65, 174, 146)];
+        rt.layer.anchorPoint = CGPointMake(0.5,1);
+        rt.layer.transform = CATransform3DMakeScale(0.1 + i*0.2, 0.1 + i * 0.2, 1);
+        rt.translationX = i * 150;
+        rt.translationY = i * 65;
+        rt.scale = 0.1 + i * 0.2;
+        rt.image = img;
+        [self.view addSubview:rt];
+        [self.rightItems addObject:rt];
+        
+        GameImageView *lt = [[GameImageView alloc] initWithFrame:CGRectMake(330 - i * 133, 430 + i * 65, 174 , 146)];
+        lt.layer.anchorPoint = CGPointMake(0.5, 1);
+        lt.layer.transform = CATransform3DMakeScale(0.1 + i * 0.2, 0.1 + i * 0.2, 1);
+        lt.translationX = - i * 133;
+        lt.translationY = i * 65;
+        lt.scale = 0.1 + i * 0.2;
+        lt.image = img;
+        [self.view addSubview:lt];
+        
+        [self.leftItems addObject:lt];
+    }
 }
 
 - (void)upLoadRuningData
