@@ -10,6 +10,8 @@
 
 @interface HealthComomSenceViewController ()
 
+@property (nonatomic, retain) NSArray *dataList;
+
 @end
 
 @implementation HealthComomSenceViewController
@@ -28,6 +30,28 @@
     [super viewDidLoad];
     _tableView.backgroundColor = [UIColor clearColor];
     _tableView.backgroundView = nil;
+    
+    [self getHealthComomSence];
+}
+
+- (void)getHealthComomSence
+{
+    
+    KnowledgeReq *req = [[KnowledgeReq alloc] init];
+    req.USER_ID = [MyDefaults getUserID] ? [MyDefaults getUserID] : @"20";
+    
+    [[DHSocket shareSocket] invokeWithReq:req delegate:(id<DHSocketDelegate>)self];
+}
+
+- (void)socketDidRecvMessage:(id)result
+{
+    KnowledgeResp *resp = (KnowledgeResp *)result;
+    if (resp.KNOWLEDGES.count > 0) {
+        self.dataList = resp.KNOWLEDGES;
+        
+        [_tableView reloadData];
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning

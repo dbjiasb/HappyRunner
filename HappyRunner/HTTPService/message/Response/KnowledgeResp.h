@@ -10,4 +10,6 @@
 
 @interface KnowledgeResp : ResponseMsg
 
+@property(nonatomic, retain) NSMutableArray *KNOWLEDGES;
+
 @end

@@ -49,6 +49,7 @@ typedef NSUInteger DHSocketError;
 
 @property BOOL isConnected;
 
++ (DHSocket *)shareSocket;
 
 //连接服务器
 - (void)connectToSever:(NSString *)ipString port:(int )port;
@@ -80,6 +81,7 @@ typedef NSUInteger DHSocketError;
  result: 相应的Resp对象
 */
 - (void)socketDidRecvMessage:(id)result;
+- (void)socketDidRecvMessage:(id)result service:(NSString *)service;
 - (void)socketDidFailError:(NSError *)error;
 
 @end

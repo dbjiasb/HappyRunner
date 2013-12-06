@@ -73,7 +73,7 @@
     req.PASSWORD = password;//@"123456";
     req.NICK_NAME = @"DragonHuang";//@"testUser";
 
-    [[[DHSocket alloc] init] invokeWithReq:req
+    [[DHSocket shareSocket] invokeWithReq:req
                                   delegate:self];
 //    _socket  = [[DHSocket alloc] init];
 //    _socket.delegate = self;

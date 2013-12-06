@@ -23,12 +23,19 @@
 - (NSDictionary *)dictionary
 {
     if (self.PASSWORD) {
-        self.PASSWORD = [self.PASSWORD md5String];
+//        self.PASSWORD = [self.PASSWORD md5String];
     }
     
     NSMutableDictionary * ret = [[NSMutableDictionary alloc] init] ;
     
-    [ret addEntriesFromDictionary:[self dictionaryWithValuesForKeys:[NSArray arrayWithObjects:@"USER_NAME",@"PASSWORD", nil]]];
+    if([MyDefaults getToken])
+    {
+        [ret setObject:[MyDefaults getToken] forKey:@"Token"];
+    }
+    else
+    {
+        [ret addEntriesFromDictionary:[self dictionaryWithValuesForKeys:[NSArray arrayWithObjects:@"USER_NAME",@"PASSWORD", nil]]];
+    }
     
     self.ROW_PARAMS = ret;
     

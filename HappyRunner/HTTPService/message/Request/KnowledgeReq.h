@@ -13,6 +13,8 @@
 @property (nonatomic, copy) NSString *USER_ID;
 @property (nonatomic, copy) NSString *TOKEN;
 @property (nonatomic, copy) NSString *USER_NAME;
+@property (nonatomic, assign) NSInteger PAGE;
+@property (nonatomic, assign) NSInteger page_size;
 - (NSDictionary *)dictionary;
 
 @end

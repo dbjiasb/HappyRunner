@@ -105,7 +105,7 @@
         req.USER_NAME = account;
         req.PASSWORD = password;
         
-        [[[DHSocket alloc] init] invokeWithReq:req
+        [[DHSocket shareSocket] invokeWithReq:req
                                       delegate:self];
     }
     else
@@ -136,6 +136,7 @@
     if (resp.code.integerValue == 1)
     {
         [MyDefaults setToken:resp.TOKEN];
+        [MyDefaults setUserID:resp.USER_ID];
         [self.navigationController popViewControllerAnimated:YES];
     }
     else

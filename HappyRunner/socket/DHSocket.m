@@ -36,11 +36,27 @@
 
 @end
 
-
+static DHSocket *_scocket;
 
 @implementation DHSocket
 
 @synthesize isConnected;
+
++ (void) initialize
+{
+    _scocket = [[DHSocket alloc] init];
+}
+
++ (DHSocket *)shareSocket
+{
+    if (!_scocket)
+    {
+        _scocket = [[DHSocket alloc] init];
+        [_scocket connectToSever:SEVER port:PORT];
+    }
+    
+    return _scocket;
+}
 
 -(id)init
 {
@@ -62,7 +78,8 @@
     self.delegate = delegate;
     self.param = req;
     
-    [self connectToSever:SEVER port:PORT];
+//    [self connectToSever:SEVER port:PORT];
+    [self sendMessageWithReq:req];
     
 }
 
@@ -108,16 +125,20 @@
                                               
                                           }
                                           );
-                           //成功链接后发送
-                           [self sendMessageWithReq:self.param];
+                           if ([MyDefaults getToken])
+                           {
+                               LoginReq *req = [[LoginReq alloc] init];
+                               [self invokeWithReq:req
+                                            delegate:nil];
+                           }
+//                           //成功链接后发送
+//                           [self sendMessageWithReq:self.param];
+                           //循环等待消息
+                           [self recvCommand];
                        }
                        else
                        {
-                           dispatch_async(dispatch_get_main_queue(),
-                                          ^{
-                                              //连接失败
-                                          }
-                                          );
+                           [self connectToSever:ipString port:port];
                            
                        }
                        
@@ -202,8 +223,8 @@
 	{
 		struct timeval tv;
 		fd_set readfds;
-		tv.tv_sec=0;
-		tv.tv_usec=50;
+		tv.tv_sec = 0;
+		tv.tv_usec = 0;
 		
 		Byte tempRecv[1024];//缓冲区
 		memset(tempRecv,0x00,1024);
@@ -217,19 +238,27 @@
 				error = SocketDisconnect;
 			     NSLog(@"disconnect!");
 				close(socketClient);
+                socketClient = 0;
 				return;
 				
 			}
-			FD_ZERO(&readfds); // clear all bits in fdset 
+			FD_ZERO(&readfds);  //每次循环都要清空集合，否则不能检测描述符变化
 			FD_SET(socketClient,&readfds);//turn on the bit for fd in fdset
 			int rec = select(socketClient + 1,&readfds,NULL,NULL,&tv);
 			
 			
-			if (rec<=0) 
+			if (rec == -1)
+			{//select错误，退出程序
+				NSLog(@"select wrong--%d!",rec);
+                
+			}
+            else if(rec == 0)
+            {//再次轮询
+                
+            }
+            else
 			{
-//				NSLog(@"select wrong!");
-			}else
-			{  
+                 //测试sock是否可读，即是否网络上有数据
 				if( FD_ISSET(socketClient,&readfds)>0)
 				{
 					BOOL sthToRead=NO;
@@ -252,20 +281,21 @@
 
 					if(!sthToRead)
 					{
-						error = SocketDisconnect;
-						NSLog(@"断开连接v....");
-						free(rePacket);
-						close(socketClient);
-						return;
+//						error = SocketDisconnect;
+//						NSLog(@"断开连接v....");
+//						free(rePacket);
+//						close(socketClient);
+//						return;
 						
 					}
-					
-					[self didRecvMessageFromSever:rePacket size:recState];
+					else
+                    {
+                        [self didRecvMessageFromSever:rePacket size:recState];
+                    }
 
-                    
 					recState = 0;
 					free(rePacket);
-                    break;
+//                    break;
 				}
 			}
 		}
@@ -312,7 +342,7 @@
                                           );
                            
                            //发送成功后循环从服务器获取消息
-                           [self recvCommand];
+//                           [self recvCommand];
                        }
                        else
                        {
@@ -349,6 +379,26 @@
         {
             
             NSDictionary *dic = [message objectFromJSONString];
+            if (!dic)
+            {
+                NSLog(@"数据出错～");
+                return;
+            }
+            
+            if ([dic[@"SERVICE"] isEqualToString:@"noticeInviteFriend"])
+            {
+                InviteFriendsResp *resp = [[InviteFriendsResp alloc] init];
+                [resp fillFromeDictionary:dic];
+                
+                dispatch_async(dispatch_get_main_queue(),
+                               ^{
+                                   [[NSNotificationCenter defaultCenter] postNotificationName:Notification_Key_InviteFriend
+                                                                                       object:resp];
+                               });
+                
+                return;
+            }
+            
             ResponseMsg *resp = [[[self.param responseMsgClass] alloc] init];
             [resp fillFromeDictionary:dic];
 
@@ -356,7 +406,11 @@
                            ^{
                                if([resp.code integerValue] == 1)
                                {
-                                   if (self.delegate && [self.delegate respondsToSelector:@selector(socketDidRecvMessage:)])
+                                   if (self.delegate && [self.delegate respondsToSelector:@selector(socketDidRecvMessage:service:)])
+                                   {
+                                       [self.delegate socketDidRecvMessage:resp service:self.param.SERVICE];
+                                   }
+                                   else if (self.delegate && [self.delegate respondsToSelector:@selector(socketDidRecvMessage:)])
                                    {
                                        [self.delegate socketDidRecvMessage:resp];
                                    }
@@ -365,6 +419,9 @@
                                {
                                    if (self.delegate && [self.delegate respondsToSelector:@selector(socketDidFailError:)])
                                    {
+                                       if (!resp.message) {
+                                           resp.message = @"数据出错!";
+                                       }
                                        NSError *err = [NSError errorWithDomain:resp.message code:[resp.code integerValue] userInfo:nil];
                                        [self.delegate socketDidFailError:err];
                                    }
@@ -372,7 +429,7 @@
                            }
                            );
             
-            close(socketClient);
+//            close(socketClient);
         }
         
     }

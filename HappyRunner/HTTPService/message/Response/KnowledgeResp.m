@@ -10,4 +10,14 @@
 
 @implementation KnowledgeResp
 
+- (void)fillFromeDictionary:(NSDictionary *)dic {
+    
+    if (ISNULL(dic))
+        return;
+    [super fillFromeDictionary:dic];
+    
+    self.KNOWLEDGES = [dic objectForKey:@"DATASET:KNOWLEDGES"];
+    
+}
+
 @end

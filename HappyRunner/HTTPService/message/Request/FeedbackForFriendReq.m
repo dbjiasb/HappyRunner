@@ -1,25 +1,21 @@
 //
-//  KnowledgeReq.m
+//  FeedbackForFriendReq.m
 //  HappyRunner
 //
-//  Created by chinatsp on 13-12-1.
+//  Created by chinatsp on 13-12-5.
 //  Copyright (c) 2013年 chinatsp. All rights reserved.
 //
 
-#import "KnowledgeReq.h"
+#import "FeedbackForFriendReq.h"
 
-@implementation KnowledgeReq
+@implementation FeedbackForFriendReq
 
 - (id)init
 {
     if (self = [super init]) {
         
-        self.TOKEN = [MyDefaults getToken];
-        self.USER_ID = [MyDefaults getUserID];
-        
-        self.SERVICE = @"queryKnowledge";
-        self.PAGE = 1;
-        self.page_size = 10;
+        self.SERVICE = @"feedbackForFriend";
+        self.VERIFIED = @"1";
     }
     
     return self;
@@ -30,9 +26,8 @@
     
     NSMutableDictionary * ret = [[NSMutableDictionary alloc] init] ;
     
-    [ret addEntriesFromDictionary:[self dictionaryWithValuesForKeys:[NSArray arrayWithObjects:@"PAGE",@"USER_ID", nil]]];
-    [ret setObject:@(self.page_size) forKey:@"PAGE_SIZE"];
-
+    [ret addEntriesFromDictionary:[self dictionaryWithValuesForKeys:[NSArray arrayWithObjects:@"GROUP_ID",@"USER_ID",@"TO_USER_ID",@"VERIFIED", nil]]];
+    
     self.ROW_PARAMS = ret;
     
     NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithDictionary:[super dictionary]];
@@ -46,7 +41,7 @@
 - (Class) responseMsgClass {
     
     
-    return KnowledgeResp.class;
+    return FeedbackForFriendResp.class;
 }
 
 

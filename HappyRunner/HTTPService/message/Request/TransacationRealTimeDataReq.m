@@ -1,25 +1,21 @@
 //
-//  KnowledgeReq.m
+//  TransacationRealTimeDataReq.m
 //  HappyRunner
 //
-//  Created by chinatsp on 13-12-1.
+//  Created by chinatsp on 13-12-5.
 //  Copyright (c) 2013年 chinatsp. All rights reserved.
 //
 
-#import "KnowledgeReq.h"
+#import "TransacationRealTimeDataReq.h"
 
-@implementation KnowledgeReq
+@implementation TransacationRealTimeDataReq
 
 - (id)init
 {
     if (self = [super init]) {
         
-        self.TOKEN = [MyDefaults getToken];
-        self.USER_ID = [MyDefaults getUserID];
+        self.SERVICE = @"transacationRealTimeData";
         
-        self.SERVICE = @"queryKnowledge";
-        self.PAGE = 1;
-        self.page_size = 10;
     }
     
     return self;
@@ -30,9 +26,8 @@
     
     NSMutableDictionary * ret = [[NSMutableDictionary alloc] init] ;
     
-    [ret addEntriesFromDictionary:[self dictionaryWithValuesForKeys:[NSArray arrayWithObjects:@"PAGE",@"USER_ID", nil]]];
-    [ret setObject:@(self.page_size) forKey:@"PAGE_SIZE"];
-
+    [ret addEntriesFromDictionary:[self dictionaryWithValuesForKeys:[NSArray arrayWithObjects:@"USER_ID",@"MATCH_ID",@"DISTANCE",@"CALORIE",@"TIME_CONSUMING",@"SPEED",@"NICK_NAME", nil]]];
+    
     self.ROW_PARAMS = ret;
     
     NSMutableDictionary * dic = [NSMutableDictionary dictionaryWithDictionary:[super dictionary]];
@@ -45,9 +40,10 @@
 
 - (Class) responseMsgClass {
     
-    
-    return KnowledgeResp.class;
+
+    return TransacationRealTimeDataResp.class;
 }
+
 
 
 @end

@@ -712,6 +712,18 @@ static char const * const sectionKey = "kUIButtonSectionKey";
     [alert show];
 }
 
++ (void)showAlert:(NSString *)message
+         delegate:(id <UIAlertViewDelegate>)delegate
+          button1:(NSString *)button1
+          button2:(NSString *)button2
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"
+                                                    message:message delegate:delegate
+                                          cancelButtonTitle:button1
+                                          otherButtonTitles:button2, nil];
+    
+    [alert show];
+}
 + (void)showAlert:(NSString *)message delegate:(id <UIAlertViewDelegate>)delegate
 {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示"

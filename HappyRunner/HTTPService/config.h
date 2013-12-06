@@ -17,6 +17,8 @@
 
 #pragma mark - nslog_debug
 
+#define Notification_Key_InviteFriend @"Notification_Key_InviteFriend"
+
 #ifndef __OPTIMIZE__
 # define NSLog(...) NSLog(__VA_ARGS__)
 #else
@@ -28,7 +30,7 @@
 //IM服务地址：threadmill.oicp.net 端口号：9999
 //跑步机服务地址：threadmill.oicp.net 端口号：9800
 
-#define SEVER @"223.4.24.27"//@"192.168.5.45"//@"172.20.10.4"//@"192.168.1.199"//@"threadmill.oicp.net"//
+#define SEVER @"223.4.24.27"//@"172.20.10.4"//@"192.168.1.199"//@"threadmill.oicp.net"//@"192.168.5.45"//
 #define PORT 9800//8888//
 
 #define SERVER_Address @"http://threadmill.oicp.net:9800/userRegister"

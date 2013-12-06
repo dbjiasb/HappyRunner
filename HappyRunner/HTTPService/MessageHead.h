@@ -16,3 +16,22 @@
 
 #import "KnowledgeReq.h"
 #import "KnowledgeResp.h"
+
+#import "InviteFriendsReq.h"
+#import "InviteFriendsResp.h"
+
+#import "StartRaceReq.h"
+#import "StartRaceResp.h"
+
+#import "FeedbackForFriendReq.h"
+#import "FeedbackForFriendResp.h"
+
+#import "RunningResultsReq.h"
+#import "RunningResultsResp.h"
+
+#import "EndRaceReq.h"
+#import "EndRaceResp.h"
+
+#import "TransacationRealTimeDataReq.h"
+#import "TransacationRealTimeDataResp.h"
+

@@ -16,10 +16,54 @@
 #import "GameChooseViewController.h"
 
 @interface HomeViewController ()
+{
+    
+}
+
+@property (nonatomic, retain) InviteFriendsResp *resp;
 
 @end
 
 @implementation HomeViewController
+- (id)init
+{
+    if (self = [super init]) {
+        
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(didReceiveInviteFriend:)
+                                                     name:Notification_Key_InviteFriend
+                                                   object:nil];
+        
+    }
+    
+    return self;
+}
+
+- (void)didReceiveInviteFriend:(NSNotification *)notification
+{
+    self.resp = notification.object;
+    [[NSUserDefaults standardUserDefaults] setObject:self.resp.GROUP_ID forKey:@"GROUP_ID"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
+    if ([self.resp.USER_ID isEqualToString:[MyDefaults getUserID]]) {
+        
+        
+        return;
+    }
+    
+    [MyUtil showAlert:[NSString stringWithFormat:@"%@邀请你参加比赛",self.resp.USER_ID]
+             delegate:(id<UIAlertViewDelegate>)self
+              button1:@"拒绝"
+              button2:@"接受"];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:Notification_Key_InviteFriend
+                                                  object:self];
+}
 
 - (void)viewDidLoad
 {
@@ -169,4 +213,19 @@
 {
     return UIInterfaceOrientationLandscapeLeft;
 }
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    FeedbackForFriendReq *req = [[FeedbackForFriendReq alloc] init];
+    req.VERIFIED = [NSString stringWithFormat:@"%d",buttonIndex];
+    req.USER_ID = [MyDefaults getUserID];
+    req.TO_USER_ID = self.resp.USER_ID;
+    req.GROUP_ID = self.resp.GROUP_ID;
+
+    
+    self.resp = nil;
+    
+    [[DHSocket shareSocket] invokeWithReq:req delegate:(id<DHSocketDelegate>)self];
+}
+
 @end

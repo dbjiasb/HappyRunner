@@ -199,6 +199,10 @@
 + (void)showAlert:(NSString *)message
          delegate:(id <UIAlertViewDelegate>)delegate
            button:(NSString *)button;
++ (void)showAlert:(NSString *)message
+         delegate:(id <UIAlertViewDelegate>)delegate
+           button1:(NSString *)button1
+           button2:(NSString *)button2;
 + (float)viewHeight;
 
 + (void)createProgressDialog:(UIView *)superView;
